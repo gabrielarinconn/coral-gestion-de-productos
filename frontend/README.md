@@ -1,59 +1,71 @@
-# Frontend
+# Coral — Sillas de diseño (Frontend)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.3.
+Aplicación web en **Angular 22** para la gestión y venta de una tienda de sillas de diseño (posicionamiento high-ticket). Consume la API REST del backend NestJS incluido en la raíz de este repositorio.
 
-## Development server
+## Integrantes
 
-To start a local development server, run:
+- Andrea Lizcano
+- Gabriela Rincón
 
-```bash
-ng serve
-```
+## Tecnologías utilizadas
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Angular 22** (standalone components, signals, control flow `@if`/`@for`)
+- **TypeScript**
+- **RxJS** (HttpClient, interceptores)
+- **CSS** con variables de diseño propias (sin librerías de UI de terceros)
+- Backend: **NestJS** + **TypeORM** + **PostgreSQL** (Supabase) — ver [README de la raíz](../README.md)
 
-## Code scaffolding
+## Funcionalidades
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Home pública: listado de productos, búsqueda, filtro por categoría, estados de carga y vacío
+- Detalle de producto público, con botón de favorito si hay sesión iniciada
+- Registro e inicio de sesión (JWT)
+- Gestión de Productos y Categorías (crear, editar, eliminar) — rutas protegidas
+- Favoritos y Perfil (con cambio de contraseña) — rutas protegidas
+- Guard de rutas e interceptor HTTP que agrega el token automáticamente y maneja sesiones expiradas (401)
+- Logout
 
-```bash
-ng generate component component-name
-```
+## Cómo instalar
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Requiere Node.js y el backend corriendo (ver [README de la raíz](../README.md) para configurar la base de datos y las variables de entorno del backend).
 
 ```bash
-ng test
+cd frontend
+npm install
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Cómo ejecutar
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+La aplicación queda disponible en `http://localhost:4200`.
 
-## Additional Resources
+Por defecto, el frontend consume la API en `http://localhost:3000` (configurado en `src/environment.ts`). Asegúrate de tener el backend corriendo en ese puerto:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+# desde la raíz del repositorio
+npm run start:dev
+```
+
+## URL de la API
+
+`http://localhost:3000` en desarrollo local. Documentación interactiva (Swagger) en `http://localhost:3000/api/docs`.
+
+## Estructura del proyecto
+
+```text
+src/app/
+├── core/            # servicios, guards, interceptores, modelos - sin UI
+├── shared/          # componentes reutilizables (layout, product-card, etc.)
+├── pages/           # una carpeta por pantalla
+├── app.routes.ts
+└── app.config.ts
+```
+
+## Tests
+
+```bash
+npx ng test --watch=false
+```
