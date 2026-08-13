@@ -1,0 +1,24 @@
+@if (loading()) {
+  <app-loading></app-loading>
+} @else if (product(); as p) {
+  <section class="product-detail">
+    @if (p.images.length > 0) {
+      <img [src]="p.images[0].url" [alt]="p.name" />
+    }
+
+    <h1>{{ p.name }}</h1>
+    <p class="category">{{ p.category.name }}</p>
+    <p class="price">{{ p.price | currency }}</p>
+    <p class="stock">Stock: {{ p.stock }} unidades</p>
+
+    @if (p.description) {
+      <p class="description">{{ p.description }}</p>
+    }
+
+    @if (authService.isLoggedIn()) {
+      <button (click)="toggleFavorite()" [disabled]="favoriteLoading()">
+        {{ isFavorite() ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
+      </button>
+    }
+  </section>
+}

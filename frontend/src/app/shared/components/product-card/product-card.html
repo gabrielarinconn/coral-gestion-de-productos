@@ -1,6 +1,8 @@
 <article class="product-card">
-  <img [src]="product().images[0]?.url" [alt]="product().name" />
-  <h3>{{ product().name }}</h3>
-  <p class="price">{{ product().price | currency }}</p>
-  <span class="category">{{ product().category.name }}</span>
+  <a [routerLink]="['/products', product().id]">
+    <img [src]="product().images[0]?.url" [alt]="product().name" />
+    <h3>{{ product().name }}</h3>
+    <p class="price">{{ product().price | currency }}</p>
+    <span class="category">{{ product().category.name }}</span>
+  </a>
 </article>
