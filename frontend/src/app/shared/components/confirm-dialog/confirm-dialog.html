@@ -1,0 +1,7 @@
+<dialog #dialog class="confirm-dialog">
+  <p>{{ message() }}</p>
+  <div class="actions">
+    <button type="button" (click)="onCancel()">Cancelar</button>
+    <button type="button" class="danger" (click)="onConfirm()">Eliminar</button>
+  </div>
+</dialog>

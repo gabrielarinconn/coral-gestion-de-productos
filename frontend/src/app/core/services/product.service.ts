@@ -12,6 +12,15 @@ export interface ProductQuery {
   limit?: number;
 }
 
+export interface ProductPayload {
+  name: string;
+  description?: string;
+  price: number;
+  stock: number;
+  categoryId: string;
+  images?: string[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private http = inject(HttpClient);
@@ -29,5 +38,17 @@ export class ProductService {
 
   getById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.baseUrl}/${id}`);
+  }
+
+  create(data: ProductPayload): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl, data);
+  }
+
+  update(id: string, data: Partial<ProductPayload>): Observable<Product> {
+    return this.http.patch<Product>(`${this.baseUrl}/${id}`, data);
+  }
+
+  remove(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

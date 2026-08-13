@@ -1,0 +1,85 @@
+<section class="products-page">
+  <h1>Productos</h1>
+
+  <form (ngSubmit)="onSubmit()">
+    <label>
+      Nombre
+      <input type="text" name="name" [(ngModel)]="name" required />
+    </label>
+    <label>
+      Descripción
+      <input type="text" name="description" [(ngModel)]="description" />
+    </label>
+    <label>
+      Precio
+      <input type="number" name="price" [(ngModel)]="price" min="0" step="0.01" required />
+    </label>
+    <label>
+      Stock
+      <input type="number" name="stock" [(ngModel)]="stock" min="0" step="1" required />
+    </label>
+    <label>
+      Categoría
+      <select name="categoryId" [(ngModel)]="categoryId" required>
+        <option value="">Selecciona una categoría</option>
+        @for (category of categories(); track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Imágenes (URLs separadas por coma)
+      <input type="text" name="images" [(ngModel)]="imagesText" />
+    </label>
+
+    @if (errorMessage()) {
+      <app-error-message [message]="errorMessage()!" />
+    }
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="saving()">
+        {{ editingId() ? 'Guardar cambios' : 'Crear producto' }}
+      </button>
+      @if (editingId()) {
+        <button type="button" (click)="cancelEdit()">Cancelar</button>
+      }
+    </div>
+  </form>
+
+  @if (loading()) {
+    <app-loading></app-loading>
+  } @else if (products().length === 0) {
+    <app-no-results message="No hay productos todavía." />
+  } @else {
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Categoría</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products(); track product.id) {
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price | currency }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.category.name }}</td>
+            <td class="actions">
+              <button type="button" (click)="startEdit(product)">Editar</button>
+              <button type="button" (click)="askDelete(product.id)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <app-confirm-dialog
+    message="¿Eliminar este producto? Esta acción no se puede deshacer."
+    (confirmed)="onDeleteConfirmed()"
+  />
+</section>
