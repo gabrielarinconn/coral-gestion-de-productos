@@ -1,0 +1,39 @@
+@if (loading()) {
+  <app-loading></app-loading>
+} @else if (user(); as u) {
+  <section class="profile-page">
+    <h1>Mi perfil</h1>
+    <p><strong>Nombre:</strong> {{ u.name }}</p>
+    <p><strong>Correo:</strong> {{ u.email }}</p>
+    <p><strong>Miembro desde:</strong> {{ u.createdAt | date }}</p>
+
+    <h2>Cambiar contraseña</h2>
+    <form (ngSubmit)="onChangePassword()">
+      <label>
+        Contraseña actual
+        <input type="password" name="currentPassword" [(ngModel)]="currentPassword" required />
+      </label>
+      <label>
+        Nueva contraseña
+        <input
+          type="password"
+          name="newPassword"
+          [(ngModel)]="newPassword"
+          required
+          minlength="6"
+        />
+      </label>
+
+      @if (passwordError()) {
+        <app-error-message [message]="passwordError()!" />
+      }
+      @if (passwordSuccess()) {
+        <p class="success">{{ passwordSuccess() }}</p>
+      }
+
+      <button type="submit" [disabled]="savingPassword()">
+        {{ savingPassword() ? 'Guardando...' : 'Cambiar contraseña' }}
+      </button>
+    </form>
+  </section>
+}
