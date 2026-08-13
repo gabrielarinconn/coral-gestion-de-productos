@@ -1,8 +1,14 @@
 <article class="product-card">
   <a [routerLink]="['/products', product().id]">
-    <img [src]="product().images[0]?.url" [alt]="product().name" />
+    <div class="image-wrap">
+      @if (product().images[0]?.url) {
+        <img [src]="product().images[0].url" [alt]="product().name" loading="lazy" />
+      } @else {
+        <div class="image-placeholder" aria-hidden="true"></div>
+      }
+    </div>
+    <span class="category">{{ product().category.name }}</span>
     <h3>{{ product().name }}</h3>
     <p class="price">{{ product().price | currency }}</p>
-    <span class="category">{{ product().category.name }}</span>
   </a>
 </article>

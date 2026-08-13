@@ -1,0 +1,11 @@
+.no-results {
+  text-align: center;
+  padding: var(--space-6) var(--space-3);
+  color: var(--color-fg-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.no-results p {
+  margin: 0;
+}

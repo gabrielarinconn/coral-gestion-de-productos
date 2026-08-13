@@ -1,15 +1,106 @@
+/* ============================================================
+   Hero — composición asimétrica + scroll-driven transform.
+   La imagen rota/escala/se desvanece según el progreso de scroll
+   (CSS puro, sin librerías). Fallback estático si el navegador
+   no soporta animation-timeline: scroll().
+   ============================================================ */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-5);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  max-width: 42ch;
+}
+
+.hero-image {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+  transform: rotate(-4deg) scale(0.94);
+  opacity: 0.85;
+}
+
+@keyframes hero-image-scroll {
+  from {
+    transform: rotate(-6deg) scale(0.92);
+    opacity: 0.75;
+  }
+  to {
+    transform: rotate(3deg) scale(1.04);
+    opacity: 1;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .hero-image {
+    animation: hero-image-scroll linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 500px;
+  }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Listado
+   ============================================================ */
 .home {
-  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-5) var(--space-6);
 }
 
 .filters {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.filters app-search-bar {
+  flex: 1;
 }
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.product-grid app-product-card {
+  display: block;
+  animation: card-enter var(--duration-slow) var(--ease-standard) both;
+  animation-delay: calc(var(--stagger, 0) * 60ms);
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

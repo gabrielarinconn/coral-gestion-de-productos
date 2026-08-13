@@ -1,3 +1,19 @@
+<header class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Colección 2026</p>
+    <h1>Sillas diseñadas para durar toda una vida</h1>
+    <p class="hero-subtitle">
+      Piezas de alta gama, hechas a mano con materiales nobles. Cada silla Coral
+      se construye para acompañarte décadas, no temporadas.
+    </p>
+  </div>
+  <img
+    class="hero-image"
+    src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=900&q=80"
+    alt="Silla de diseño Coral en un estudio iluminado"
+  />
+</header>
+
 <section class="home">
   <div class="filters">
     <app-search-bar (search)="onSearch($event)"></app-search-bar>
@@ -16,8 +32,8 @@
     <app-no-results message="No se encontraron productos." />
   } @else {
     <div class="product-grid">
-      @for (product of products(); track product.id) {
-        <app-product-card [product]="product"></app-product-card>
+      @for (product of products(); track product.id; let i = $index) {
+        <app-product-card [product]="product" [style.--stagger]="i"></app-product-card>
       }
     </div>
   }

@@ -1,4 +1,5 @@
-<nav>
+<nav class="navbar">
+  <a class="brand" routerLink="/">Coral</a>
   <ul>
     <li><a routerLink="/">Inicio</a></li>
     @if (authService.isLoggedIn()) {
@@ -6,16 +7,16 @@
       <li><a routerLink="/categories">Categorías</a></li>
       <li><a routerLink="/favorites">Favoritos</a></li>
       <li><a routerLink="/profile">Perfil</a></li>
-      <li><a (click)="logout()">Cerrar sesión</a></li>
+      <li><a class="logout" (click)="logout()">Cerrar sesión</a></li>
     } @else {
       <li><a routerLink="/login">Iniciar sesión</a></li>
-      <li><a routerLink="/register">Registrarse</a></li>
+      <li><a class="cta" routerLink="/register">Registrarse</a></li>
     }
   </ul>
 </nav>
 
 <ng-content></ng-content>
 
-<footer>
-  <p>&copy; 2026 Gestión de Productos. Todos los derechos reservados.</p>
+<footer class="site-footer">
+  <p>&copy; 2026 Coral. Sillas de diseño, hechas para durar.</p>
 </footer>
