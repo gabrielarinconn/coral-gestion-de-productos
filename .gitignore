@@ -35,6 +35,9 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Claude Code agent configs (local, no subir a GitHub)
+.claude/
+
 # dotenv environment variable files
 .env
 .env.development.local
