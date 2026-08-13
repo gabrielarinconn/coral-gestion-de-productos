@@ -13,8 +13,16 @@ export class Layout {
   private router = inject(Router);
 
   logout(): void {
-    this.authService.logout().subscribe(() => {
-      this.router.navigate(['/']);
+    // El JWT es stateless (ver FRONTEND_GUIDE.md): el logout real ocurre en
+    // el cliente al borrar el token. Si la llamada al backend falla (sin
+    // conexión, backend caído), igual queremos cerrar la sesión local -
+    // por eso se limpia y se navega tanto en éxito como en error.
+    this.authService.logout().subscribe({
+      next: () => this.router.navigate(['/']),
+      error: () => {
+        this.authService.clearSession();
+        this.router.navigate(['/']);
+      },
     });
   }
 }

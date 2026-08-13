@@ -27,6 +27,7 @@ export class Products implements OnInit {
   products = signal<Product[]>([]);
   categories = signal<Category[]>([]);
   loading = signal(true);
+  loadError = signal<string | null>(null);
   saving = signal(false);
   errorMessage = signal<string | null>(null);
   editingId = signal<string | null>(null);
@@ -39,15 +40,28 @@ export class Products implements OnInit {
   imagesText = '';
 
   ngOnInit(): void {
-    this.categoryService.getAll().subscribe((categories) => this.categories.set(categories));
+    this.categoryService.getAll().subscribe({
+      next: (categories) => this.categories.set(categories),
+      error: () => {
+        // El select de categorías queda vacío; el mensaje principal de
+        // error ya lo muestra loadProducts() si el backend no responde.
+      },
+    });
     this.loadProducts();
   }
 
   loadProducts(): void {
     this.loading.set(true);
-    this.productService.getAll({ limit: 100 }).subscribe((response) => {
-      this.products.set(response.data);
-      this.loading.set(false);
+    this.loadError.set(null);
+    this.productService.getAll({ limit: 100 }).subscribe({
+      next: (response) => {
+        this.products.set(response.data);
+        this.loading.set(false);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.loading.set(false);
+        this.loadError.set(extractErrorMessage(error));
+      },
     });
   }
 

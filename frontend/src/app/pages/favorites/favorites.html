@@ -3,6 +3,9 @@
 
   @if (loading()) {
     <app-loading></app-loading>
+  } @else if (errorMessage()) {
+    <app-error-message [message]="errorMessage()!" />
+    <button type="button" (click)="loadFavorites()">Reintentar</button>
   } @else if (favorites().length === 0) {
     <app-no-results message="Todavía no tienes productos favoritos." />
   } @else {

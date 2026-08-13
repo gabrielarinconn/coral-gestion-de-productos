@@ -48,6 +48,9 @@
 
   @if (loading()) {
     <app-loading></app-loading>
+  } @else if (loadError()) {
+    <app-error-message [message]="loadError()!" />
+    <button type="button" (click)="loadProducts()">Reintentar</button>
   } @else if (products().length === 0) {
     <app-no-results message="No hay productos todavía." />
   } @else {

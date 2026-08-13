@@ -19,6 +19,7 @@ export class Profile implements OnInit {
 
   user = signal<User | null>(null);
   loading = signal(true);
+  loadError = signal<string | null>(null);
 
   currentPassword = '';
   newPassword = '';
@@ -27,9 +28,21 @@ export class Profile implements OnInit {
   savingPassword = signal(false);
 
   ngOnInit(): void {
-    this.userService.getProfile().subscribe((user) => {
-      this.user.set(user);
-      this.loading.set(false);
+    this.loadProfile();
+  }
+
+  loadProfile(): void {
+    this.loading.set(true);
+    this.loadError.set(null);
+    this.userService.getProfile().subscribe({
+      next: (user) => {
+        this.user.set(user);
+        this.loading.set(false);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.loading.set(false);
+        this.loadError.set(extractErrorMessage(error));
+      },
     });
   }
 

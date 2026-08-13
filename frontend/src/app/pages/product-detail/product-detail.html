@@ -1,5 +1,8 @@
 @if (loading()) {
   <app-loading></app-loading>
+} @else if (loadError()) {
+  <app-error-message [message]="loadError()!" />
+  <button type="button" (click)="loadProduct()">Reintentar</button>
 } @else if (product(); as p) {
   <section class="product-detail">
     @if (p.images.length > 0) {

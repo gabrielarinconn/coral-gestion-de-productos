@@ -27,6 +27,9 @@
 
   @if (loading()) {
     <app-loading></app-loading>
+  } @else if (loadError()) {
+    <app-error-message [message]="loadError()!" />
+    <button type="button" (click)="loadCategories()">Reintentar</button>
   } @else if (categories().length === 0) {
     <app-no-results message="No hay categorías todavía." />
   } @else {

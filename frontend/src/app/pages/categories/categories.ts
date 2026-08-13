@@ -22,6 +22,7 @@ export class Categories implements OnInit {
 
   categories = signal<Category[]>([]);
   loading = signal(true);
+  loadError = signal<string | null>(null);
   errorMessage = signal<string | null>(null);
   saving = signal(false);
   editingId = signal<string | null>(null);
@@ -35,9 +36,16 @@ export class Categories implements OnInit {
 
   loadCategories(): void {
     this.loading.set(true);
-    this.categoryService.getAll().subscribe((categories) => {
-      this.categories.set(categories);
-      this.loading.set(false);
+    this.loadError.set(null);
+    this.categoryService.getAll().subscribe({
+      next: (categories) => {
+        this.categories.set(categories);
+        this.loading.set(false);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.loading.set(false);
+        this.loadError.set(extractErrorMessage(error));
+      },
     });
   }
 
