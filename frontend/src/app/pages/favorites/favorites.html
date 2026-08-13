@@ -1,0 +1,15 @@
+<section class="favorites-page">
+  <h1>Mis favoritos</h1>
+
+  @if (loading()) {
+    <app-loading></app-loading>
+  } @else if (favorites().length === 0) {
+    <app-no-results message="Todavía no tienes productos favoritos." />
+  } @else {
+    <div class="product-grid">
+      @for (product of favorites(); track product.id) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    </div>
+  }
+</section>

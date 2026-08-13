@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
-    @Component({
-    selector: 'app-layout',
-    imports: [RouterLink],
-    templateUrl: './layout.html',
-    styleUrl: './layout.css',
-    })
-    export class Layout {
-    isLoggedIn: boolean = false; // Este será un marcador de posición para el estado de inicio de sesión
+@Component({
+  selector: 'app-layout',
+  imports: [RouterLink],
+  templateUrl: './layout.html',
+  styleUrl: './layout.css',
+})
+export class Layout {
+  authService = inject(AuthService);
+  private router = inject(Router);
 
-    toggleLogin(): void {
-        this.isLoggedIn = !this.isLoggedIn; // Cambia el estado de inicio de sesión (simulación)
-    }
-    }
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/']);
+    });
+  }
+}

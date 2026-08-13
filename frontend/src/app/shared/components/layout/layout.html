@@ -1,19 +1,21 @@
-    <nav>
-    <ul>
-        <li><a [routerLink]="['/']">Inicio</a></li>
-        <li><a [routerLink]="['/products']">Productos</a></li>
-        <li><a [routerLink]="['/categories']">Categorias</a></li>
-        @if (!isLoggedIn) {
-            <li><a routerLink="/login">Iniciar sesión</a></li>
-            }
-        @if (isLoggedIn) {
-            <li><a (click)="toggleLogin()">Cerrar sesión</a></li>
-            }
-    </ul>
-    </nav>
+<nav>
+  <ul>
+    <li><a routerLink="/">Inicio</a></li>
+    @if (authService.isLoggedIn()) {
+      <li><a routerLink="/products">Productos</a></li>
+      <li><a routerLink="/categories">Categorías</a></li>
+      <li><a routerLink="/favorites">Favoritos</a></li>
+      <li><a routerLink="/profile">Perfil</a></li>
+      <li><a (click)="logout()">Cerrar sesión</a></li>
+    } @else {
+      <li><a routerLink="/login">Iniciar sesión</a></li>
+      <li><a routerLink="/register">Registrarse</a></li>
+    }
+  </ul>
+</nav>
 
-    <ng-content></ng-content> <!-- Esto permitirá que el contenido se inserte aquí -->
+<ng-content></ng-content>
 
-    <footer>
-    <p>© 2023 Tu aplicación de gestión de productos. Todos los derechos reservados.</p>
-    </footer>
+<footer>
+  <p>&copy; 2026 Gestión de Productos. Todos los derechos reservados.</p>
+</footer>

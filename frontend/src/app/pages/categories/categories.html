@@ -1,0 +1,50 @@
+<section class="categories-page">
+  <h1>Categorías</h1>
+
+  <form (ngSubmit)="onSubmit()">
+    <label>
+      Nombre
+      <input type="text" name="name" [(ngModel)]="name" required />
+    </label>
+    <label>
+      Descripción
+      <input type="text" name="description" [(ngModel)]="description" />
+    </label>
+
+    @if (errorMessage()) {
+      <app-error-message [message]="errorMessage()!" />
+    }
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="saving()">
+        {{ editingId() ? 'Guardar cambios' : 'Crear categoría' }}
+      </button>
+      @if (editingId()) {
+        <button type="button" (click)="cancelEdit()">Cancelar</button>
+      }
+    </div>
+  </form>
+
+  @if (loading()) {
+    <app-loading></app-loading>
+  } @else if (categories().length === 0) {
+    <app-no-results message="No hay categorías todavía." />
+  } @else {
+    <ul class="category-list">
+      @for (category of categories(); track category.id) {
+        <li>
+          <span>{{ category.name }}</span>
+          <div class="actions">
+            <button type="button" (click)="startEdit(category)">Editar</button>
+            <button type="button" (click)="askDelete(category.id)">Eliminar</button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+
+  <app-confirm-dialog
+    message="¿Eliminar esta categoría? Esta acción no se puede deshacer."
+    (confirmed)="onDeleteConfirmed()"
+  />
+</section>
