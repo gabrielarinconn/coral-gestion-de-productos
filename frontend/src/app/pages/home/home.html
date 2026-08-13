@@ -1,1 +1,24 @@
-<p>Home (en construcción)</p>
+<section class="home">
+  <div class="filters">
+    <app-search-bar (search)="onSearch($event)"></app-search-bar>
+
+    <select (change)="onCategoryChange($any($event.target).value)">
+      <option value="">Todas las categorías</option>
+      @for (category of categories(); track category.id) {
+        <option [value]="category.id">{{ category.name }}</option>
+      }
+    </select>
+  </div>
+
+  @if (loading()) {
+    <app-loading></app-loading>
+  } @else if (products().length === 0) {
+    <app-no-results message="No se encontraron productos." />
+  } @else {
+    <div class="product-grid">
+      @for (product of products(); track product.id) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    </div>
+  }
+</section>
