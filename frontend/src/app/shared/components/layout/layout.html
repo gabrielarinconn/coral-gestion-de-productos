@@ -1,12 +1,14 @@
     <nav>
     <ul>
         <li><a [routerLink]="['/']">Inicio</a></li>
-        <li><a [routerLink]="['/productos']">Productos</a></li>
-        <li><a [routerLink]="['/categorías']">Categorías</a></li>
-        <li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Iniciar sesión</a></li>
-        <li *ngIf="isLoggedIn">
-        <a (click)="toggleLogin()">Cerrar sesión</a> <!-- Marcador de posición para el botón -->
-        </li>
+        <li><a [routerLink]="['/products']">Productos</a></li>
+        <li><a [routerLink]="['/categories']">Categorias</a></li>
+        @if (!isLoggedIn) {
+            <li><a routerLink="/login">Iniciar sesión</a></li>
+            }
+        @if (isLoggedIn) {
+            <li><a (click)="toggleLogin()">Cerrar sesión</a></li>
+            }
     </ul>
     </nav>
 
