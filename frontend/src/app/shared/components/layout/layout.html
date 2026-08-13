@@ -1,0 +1,17 @@
+    <nav>
+    <ul>
+        <li><a [routerLink]="['/']">Inicio</a></li>
+        <li><a [routerLink]="['/productos']">Productos</a></li>
+        <li><a [routerLink]="['/categorías']">Categorías</a></li>
+        <li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Iniciar sesión</a></li>
+        <li *ngIf="isLoggedIn">
+        <a (click)="toggleLogin()">Cerrar sesión</a> <!-- Marcador de posición para el botón -->
+        </li>
+    </ul>
+    </nav>
+
+    <ng-content></ng-content> <!-- Esto permitirá que el contenido se inserte aquí -->
+
+    <footer>
+    <p>© 2023 Tu aplicación de gestión de productos. Todos los derechos reservados.</p>
+    </footer>
