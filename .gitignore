@@ -37,6 +37,7 @@ lerna-debug.log*
 
 # Claude Code agent configs (local, no subir a GitHub)
 .claude/
+PROJECT_STATE.md
 
 # dotenv environment variable files
 .env
