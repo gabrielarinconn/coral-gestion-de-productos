@@ -4,6 +4,31 @@
 
 ---
 
+## 0. Cómo se reparte el estudio
+
+Según quién construyó cada parte en el backlog de GitHub. La idea: cada quien domina a fondo lo que hizo (porque si el profesor pregunta detalle fino, tiene que salir natural), y las dos dominan por igual lo que es **crítico y cruza todo el proyecto** — nadie puede quedarse callada si preguntan por el flujo de autenticación o el enrutamiento, sin importar quién lo haya escrito.
+
+### Andrea — estudia a fondo (lo construyó ella)
+- **Sección 3 completa** (Autenticación): `AuthService`, el interceptor, el guard — es lo suyo, tiene que poder explicar cada línea.
+- **Sección 4** (Enrutamiento): armó el `app.routes.ts` base y el `authGuard` que usan las rutas protegidas.
+- **Sección 6** → `Layout` (Navbar/Footer), `Loading`, `NoResults`.
+- **Sección 5** → páginas de **Categorías** (CRUD) y **Favoritos**, y el logout real en el Navbar.
+
+### Gabriela — estudia a fondo (lo construyó ella)
+- **Sección 2 completa** (Cómo se conecta al backend): todos los Services (`ProductService`, `CategoryService`, `FavoriteService`, `UserService`).
+- **Sección 7** (Modelos/interfaces).
+- **Sección 6** → `ProductCard`, `SearchBar`, `ErrorMessage`, `ConfirmDialog`.
+- **Sección 5** → páginas de **Login/Register**, **Product Detail** (+ botón de favorito), **Productos** (CRUD), **Perfil**.
+- **Sección 8** (Manejo de errores): escribió `http-error.util.ts` y el patrón de `loadError`/`errorMessage`.
+
+### Las dos por igual (crítico, es conjunto o cruza todo)
+- **Sección 1** (arquitectura general) y **Sección 5 → Home** (se construyó entre las dos, es el checkpoint del Día 1).
+- **Sección 3.4** (el flujo completo de autenticación de punta a punta) — aunque Andrea construyó las piezas, las dos deben poder narrar el flujo completo sin trabarse.
+- **Sección 9** (preguntas típicas) y **Sección 10** (qué pasa si borro X) — son las que más probablemente pregunte el profesor directo, sin importar de quién sea el código.
+- Bonus: si preguntan por el **backend** (no es de ustedes, pero conecta todo), basta con saber: NestJS + PostgreSQL/Supabase, JWT stateless, y que el contrato de cada endpoint está en `FRONTEND_GUIDE.md` en la raíz del repo.
+
+---
+
 ## 1. La arquitectura, en una frase
 
 `core/` = lógica sin interfaz (servicios, guards, interceptores, modelos). `shared/` = piezas de UI que se repiten en varias pantallas. `pages/` = una carpeta por cada pantalla completa que el usuario visita.
